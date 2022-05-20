@@ -12,14 +12,13 @@ function init(){
     
     function buttonClick(e) {
 
+        // tar bort default-händelsen
         e.preventDefault();
         //hämtar användarens message
         let message = document.querySelector('#msg').value;
 
         //hämtar ut cookie och använder split för att bara få värdet
-        let nickName = decodeURIComponent(document.cookie);
-        let splitNick = nickName.split('=');
-        let nickNameValue = splitNick[1];
+       
 
         try {
 
@@ -30,8 +29,7 @@ function init(){
 
                 // app-filen tar emot meddelande och namn
                 socket.emit('msg', {
-                    'message' : message,
-                    'nickName' : nickNameValue
+                    'message' : message
                 });
                
             }

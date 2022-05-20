@@ -37,7 +37,7 @@ function checkNickName(req, res) {
 //när användaren surfar direkt till logga in sidan
 app.get('/loggain', LogIn);
 
-function LogIn(res) {
+function LogIn(req, res) {
 
     res.sendFile(__dirname + '/loggain.html');
 }
@@ -57,20 +57,26 @@ function nickNameCookie(req, res) {
 }
 
 
-app.get('/favicon.ico', (res) => {
+app.get('/favicon.ico', function (req, res) {
 
     res.sendFile(__dirname + '/favicon.ico');
 });
 
-io.sockets.on('connection', (socket) => {
+
+io.sockets.on('connection', function (socket) {
+
+    let cookieString = socket.handshake.headers.cookie;
+    let cookieSplit = cookieString.split('=');
+    let cookieValue = cookieSplit[1];
 
     // tar emot nytt meddelande och data från klientfilen
-    socket.on('msg', (data) => {
+    socket.on('msg', function (data) {
+       
 
         // skickar data till klientfilen
         io.emit('message', {
 
-            'nickName' : data.nickName,
+            'nickName' : cookieValue,
             'message' : data.message
         });
     });
