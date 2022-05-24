@@ -12,6 +12,7 @@ app.use('/public', express.static(__dirname + '/public'));
 
 let server = http.listen(999, checkServer);
 
+// tecken på att servern är igång, då det skrivs ut ett meddelande i terminalen
 function checkServer() {
 
     console.log('Servern är igång på port ' + server.address().port);
@@ -25,11 +26,18 @@ function checkNickName(req, res) {
     let cookie = req.cookies.nickName;
 
     if(cookie == null) {
-
         res.sendFile(__dirname + '/loggain.html');
     } else {
+        //kollar om nickname är långt nog 
+        if(cookie.length < 3) {
+            console.log('nickName är för kort');
+            res.sendFile(__dirname + '/loggain.html');
+        }
+        else{
+            res.sendFile(__dirname + '/index.html');
+        }
 
-        res.sendFile(__dirname + '/index.html');
+        
     }
 }
 
@@ -56,7 +64,7 @@ function nickNameCookie(req, res) {
 
 }
 
-
+// favicon
 app.get('/favicon.ico', function (req, res) {
 
     res.sendFile(__dirname + '/favicon.ico');
@@ -65,9 +73,44 @@ app.get('/favicon.ico', function (req, res) {
 
 io.sockets.on('connection', function (socket) {
 
-    let cookieString = socket.handshake.headers.cookie;
-    let cookieSplit = cookieString.split('=');
-    let cookieValue = cookieSplit[1];
+     //hämtar alla cookies
+    let cookieStringAll = socket.handshake.headers.cookie;
+
+    let cookieValue;
+    let cookieSplit;
+    let finalCookieSplit;
+
+    //kollar om det finns ';' som kan splittas ut dvs. om det finns flera cookies
+    let cookieStringAllCheck = cookieStringAll.includes(';');
+
+    //om det finns flera cookies
+    if(cookieStringAllCheck == true){
+        //dela strängen så att varje cookie är sin egen sträng i en vektor
+        cookieSplit = cookieStringAll.split(';');
+
+        //kollar vilket cookie heter nickName
+        for(let i = 0; i < cookieSplit.length; i++){
+
+            let checkI = cookieSplit[i].includes('nickName=');
+       
+            if(checkI == true){
+                //delar cookie 'nickName'
+                finalCookieSplit = cookieSplit[i].split('=');
+                //spara cookies värde 
+                cookieValue = finalCookieSplit[1];
+            }
+        }
+    }
+
+    // om det inte finns mer än en kaka ska den splittas direkt
+    else{
+        cookieSplit = cookieStringAll;
+        finalCookieSplit = cookieSplit.split('=');
+        //spara cookies value
+        cookieValue = finalCookieSplit[1];
+        
+    }
+
 
     // tar emot nytt meddelande och data från klientfilen
     socket.on('msg', function (data) {
@@ -75,7 +118,6 @@ io.sockets.on('connection', function (socket) {
 
         // skickar data till klientfilen
         io.emit('message', {
-
             'nickName' : cookieValue,
             'message' : data.message
         });

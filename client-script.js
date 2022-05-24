@@ -11,7 +11,7 @@ function init(){
     button.addEventListener('click', buttonClick);
     
     function buttonClick(e) {
-
+        
         // tar bort default-händelsen
         e.preventDefault();
         //hämtar användarens message
@@ -23,15 +23,16 @@ function init(){
         try {
 
             // Felmeddelande om meddelandet är mindre än 3 tecken långt
-            if(message.length < 3) throw new Error ('Meddelandet måste var åtminstone 3 tecken');
+            if(message.length < 2) throw new Error ('Message är för kort');
             
             else {
 
                 // app-filen tar emot meddelande och namn
                 socket.emit('msg', {
                     'message' : message
+                    
                 });
-               
+            
             }
 
             
@@ -80,7 +81,6 @@ socket.on('message', socketData);
     chat.append(datumP, chatNameP, chatMessageP);
     section.appendChild(chat);
  }
-
 
 
 
