@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="sv">
+    <head>
+        <meta charset="utf-8">
+        <title>Black Jack</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            <link rel="stylesheet" href="/public/styles.css">
+        </head>
+    <body class="container p-2">
+        <main class="jumbotron text-center mb-5 pb-4">
+            <h1 class="display-2">Black Jack - 21</h1>
+            <p class="lead"><b>Väntar på medspelare...</b></p>
+            <div class="spinner-grow text-dark" id="spinner"></div>
+        </main>
+        <div id="gameArea" class="d-flex flex-wrap"></div>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/public/client-script.js"></script>
+    </body>
+</html>

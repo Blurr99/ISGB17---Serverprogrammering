@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="sv">
+    <head>
+        <meta charset="utf-8">
+        <title>Black Jack</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+            <link rel="stylesheet" href="/public/styles.css">
+        </head>
+    <body class="container p-2">
+        <main class="jumbotron text-center mb-5 pb-4">
+            <h1 class="display-2">Black Jack - 21</h1>
+            <p class="lead">Ange ditt namn och välj din spelpott!</p>
+            <form method="POST" action="/loggain" class="text-left" enctype="application/x-www-form-urlencoded">                          
+                <div class="form-group">
+                    <label for="nickname">Namn:</label>
+                    <input type="text" class="form-control" id="nickname" name="nickname" required>
+                </div>
+                <div class="form-group">
+                    <label for="pott">Ange hur mycket du vill spela för*:</label>
+                    <input type="number" class="form-control" id="pott" name="pott" required>
+                </div>
+                <div class="form-group" id="essContainer">
+
+                </div>
+                <div class="text-right">                 
+                    <button type="submit" class="btn btn-primary mr-0">Börja spela!</button>                  
+                </div>
+                <div class="">* Minsta insättning 100kr (Max instättning 1500kr)</div>
+            </form>
+        </main>
+
+
+
+    </body>
+</html>

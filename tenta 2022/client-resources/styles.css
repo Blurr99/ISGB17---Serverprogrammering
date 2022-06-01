@@ -1,0 +1,13 @@
+body{
+    background-image: url('bakgrund.jpg');
+    background-size: cover;
+}
+
+main {
+    opacity: 0.9;
+}
+
+#gameArea {
+    background-color: green;
+    padding: 2.5%;
+}
